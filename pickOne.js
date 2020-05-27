@@ -37,16 +37,37 @@ function isIterable(obj) {
   return typeof obj[Symbol.iterator] === 'function';
 }
 
+const addClass = function(elements, className) {
+  const elementArray = Array.isArray(elements) ? elements : Array.from(elements);
+
+  elementArray.forEach((element) => {
+    element.classList.add(className);
+    fireEvent('classAdded', element);
+  });
+}
+
+const addToGroup = function(elements) {
+  const elementArray = Array.isArray(elements) ? elements : Array.from(elements);
+
+  elementArray.forEach((element) => {
+    if (!this.config.group.includes(element)) {
+      this.config.group.push(element);
+    }
+  });
+}
+
 /**
  * Remove the desired class from all elements of the group
  */
-const removeClass = function(group, className) {
-  if (!group || !className) return false;
+const removeClass = (elements, className) => {
+  if (!elements || !className) return false;
 
-  Array.from(group).forEach((element) => {
+  const elementArray = Array.isArray(elements) ? elements : Array.from(elements);
+
+  elementArray.forEach((element) => {
     if (element.classList.contains(className)) {
       element.classList.remove(className);
-      fireEvent('wasNotPicked', element);
+      fireEvent('classRemoved', element);
     }
   });
 }
@@ -66,12 +87,11 @@ const pick = function(target) {
     this.config.lastTarget = [target];
   }
 
-  removeClass(this.config.group, this.config.className);
+  this.removeClass(this.config.group, this.config.className);
 
-  this.config.lastTarget.forEach((element) => {
-    element.classList.add(this.config.className);
-    fireEvent('wasPicked', element);
-  });
+  this.addClass(this.config.lastTarget, this.config.className);
+
+  this.addToGroup(this.config.lastTarget);
 }
 
 /**
@@ -99,6 +119,9 @@ const pickOne = () => ({
   config,
   pick,
   init,
+  addClass,
+  removeClass,
+  addToGroup,
 });
 
 export default pickOne;
