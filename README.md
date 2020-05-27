@@ -1,5 +1,5 @@
 # pickOne
-A tiny ES6+ utility to easily apply a class on one item (or more) of a set.
+A tiny ES6+ utility to easily apply a class on one item (or more) of a set, and remove it from the others.
 
 ## :floppy_disk: Development Team
 - [Will Christenson](https://github.com/MrSpecific) (Egalitarian Project Lead :unicorn:)
@@ -20,7 +20,7 @@ testGroup.init({
 });
 ```
 
-You can pass either a selector as a string (**pickOne** will use `querySelectorAll()`) or a DOM element / Nodelist for `group`.
+You can pass either a selector as a string (**pickOne** will use `querySelectorAll()`) or a DOM element / NodeList for `group`.
 
 Once initialized, the pickOne instance is ready to be used.
 To "pick" an element or elements, simply call:
