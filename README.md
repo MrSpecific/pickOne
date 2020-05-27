@@ -1,5 +1,5 @@
 # pickOne
-A tiny ES6+ utility to easily apply a class on only one item of a set (at a time).
+A tiny ES6+ utility to easily apply a class on one item (or more) of a set.
 
 ## :floppy_disk: Development Team
 - [Will Christenson](https://github.com/MrSpecific) (Egalitarian Project Lead :unicorn:)
