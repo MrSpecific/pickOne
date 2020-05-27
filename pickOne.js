@@ -11,6 +11,7 @@ let config = {
   lastTarget: false,
   group: false,
   className: false,
+  offClassName: false,
 }
 
 /**
@@ -25,6 +26,16 @@ const fireEvent = (name, entry) => {
   entry.dispatchEvent(event);
 };
 
+/**
+ * Test if a variable is iterable
+ * @param  {[type]}  obj [description]
+ * @return {Boolean}     [description]
+ */
+function isIterable(obj) {
+  if (obj == null) return false;
+
+  return typeof obj[Symbol.iterator] === 'function';
+}
 
 /**
  * Remove the desired class from all elements of the group
@@ -49,7 +60,11 @@ const pick = function(target) {
   if (typeof target === 'string') {
     target = document.querySelectorAll(target);
   }
-  this.config.lastTarget = Array.from(target);
+  if (isIterable(target)) {
+    this.config.lastTarget = Array.from(target);
+  } else {
+    this.config.lastTarget = [target];
+  }
 
   removeClass(this.config.group, this.config.className);
 
@@ -63,10 +78,15 @@ const pick = function(target) {
  * Initialize the object
  */
 const init = function(options) {
+  // If selector passed, collect the matched elements
   if (typeof options.group === 'string') {
     options.group = document.querySelectorAll(options.group);
   }
 
+  // Convert group to an array
+  options.group = Array.from(options.group);
+
+  // Merge passed options with default configuration
   this.config = Object.assign({}, this.config, options);
 
   return this;
