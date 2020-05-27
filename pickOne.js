@@ -32,7 +32,7 @@ const fireEvent = (name, entry) => {
 const removeClass = function(group, className) {
   if (!group || !className) return false;
 
-  group.forEach((element) => {
+  Array.from(group).forEach((element) => {
     if (element.classList.contains(className)) {
       element.classList.remove(className);
       fireEvent('wasNotPicked', element);
