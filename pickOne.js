@@ -46,6 +46,9 @@ const addClass = function(elements, className) {
   });
 }
 
+/**
+ * Add an element to the group
+ */
 const addToGroup = function(elements) {
   const elementArray = Array.isArray(elements) ? elements : Array.from(elements);
 
@@ -54,6 +57,19 @@ const addToGroup = function(elements) {
       this.config.group.push(element);
     }
   });
+}
+
+/**
+ * Set the group
+ */
+const setGroup = function(group) {
+  // If selector passed, collect the matched elements
+  if (typeof group === 'string') {
+    group = document.querySelectorAll(group);
+  }
+
+  // Convert group to an array, and set it
+  this.config.group = Array.from(group);
 }
 
 /**
@@ -98,16 +114,10 @@ const pick = function(target) {
  * Initialize the object
  */
 const init = function(options) {
-  // If selector passed, collect the matched elements
-  if (typeof options.group === 'string') {
-    options.group = document.querySelectorAll(options.group);
-  }
-
-  // Convert group to an array
-  options.group = Array.from(options.group);
-
   // Merge passed options with default configuration
   this.config = Object.assign({}, this.config, options);
+
+  this.setGroup(this.config.group);
 
   return this;
 };
@@ -121,6 +131,7 @@ const pickOne = () => ({
   init,
   addClass,
   removeClass,
+  setGroup,
   addToGroup,
 });
 
