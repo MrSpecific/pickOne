@@ -27,10 +27,16 @@ To "pick" an element or elements, simply call:
 ```
 testGroup.pick(element);
 ```
-Again, you can use a DOM Element, a Nodelist or a string with a selector to specify your chosen element(s). The designated class will be added to those elements, and removed from the rest of the group.
+Again, you can use a DOM Element, a NodeList or a string with a selector to specify your chosen element(s). The designated class will be added to those elements, and removed from the rest of the group.
 
 > Note: **pickOne** will fire a custom `classAdded` event on all picked elements as well as a `classRemoved` event on any that had the class removed.
 
 > Note: If you pick elements that are not currently in the group, **pickOne** will automatically add them (Katamari Damacy style).
 
 **pickOne** is agnostic of usage, so you'll need to set up your own event listeners / functionality to trigger changes.
+
+### Additional Methods
+- `pickOne.setGroup()` - Set a new group for the **pickOne** instance. Useful if something else has manipulated the DOM.
+- `pickOne.addClass()` - Add the class to one or more elements (without removing it from any others)
+- `pickOne.clear()` - Remove the class from all elements in the group, or pass a selector / element(s) to remove from only those items.
+- `pickOne.addToGroup()` - Add elements to the group (also useful when the DOM is manipulated)
