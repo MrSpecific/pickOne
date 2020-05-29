@@ -28,8 +28,8 @@ const fireEvent = (name, entry) => {
 
 /**
  * Test if a variable is iterable
- * @param  {[type]}  obj [description]
- * @return {Boolean}     [description]
+ * @param  {*}  obj
+ * @return {Boolean}
  */
 function isIterable(obj) {
   if (obj == null) return false;
@@ -37,8 +37,32 @@ function isIterable(obj) {
   return typeof obj[Symbol.iterator] === 'function';
 }
 
+/**
+ * Accept a string, DOM element, or NodeList, and return an array of elements
+ * @param  {*} elements
+ * @return {Array}
+ */
+const collectElements = function(elements) {
+  let collectedElements = [];
+
+  if (typeof elements === 'string') {
+    elements = document.querySelectorAll(elements);
+  }
+
+  if (isIterable(elements)) {
+    collectedElements = Array.from(elements);
+  } else if (elements instanceof Element || elements instanceof HTMLDocument) {
+    collectedElements = [elements];
+  }
+
+  return collectedElements;
+}
+
+/**
+ * Add a class to an element or set of elements
+ */
 const addClass = function(elements, className) {
-  const elementArray = Array.isArray(elements) ? elements : Array.from(elements);
+  const elementArray = collectElements(elements);
 
   elementArray.forEach((element) => {
     element.classList.add(className);
@@ -50,7 +74,7 @@ const addClass = function(elements, className) {
  * Add an element to the group
  */
 const addToGroup = function(elements) {
-  const elementArray = Array.isArray(elements) ? elements : Array.from(elements);
+  const elementArray = collectElements(elements);
 
   elementArray.forEach((element) => {
     if (!this.config.group.includes(element)) {
@@ -63,13 +87,7 @@ const addToGroup = function(elements) {
  * Set the group
  */
 const setGroup = function(group) {
-  // If selector passed, collect the matched elements
-  if (typeof group === 'string') {
-    group = document.querySelectorAll(group);
-  }
-
-  // Convert group to an array, and set it
-  this.config.group = Array.from(group);
+  this.config.group = collectElements(group);
 }
 
 /**
@@ -78,7 +96,7 @@ const setGroup = function(group) {
 const removeClass = (elements, className) => {
   if (!elements || !className) return false;
 
-  const elementArray = Array.isArray(elements) ? elements : Array.from(elements);
+  const elementArray = collectElements(elements);
 
   elementArray.forEach((element) => {
     if (element.classList.contains(className)) {
@@ -92,22 +110,35 @@ const removeClass = (elements, className) => {
  * Add the desired class to an element or elements
  */
 const pick = function(target) {
-  if (!this.config.group || !target) return false;
+  const targetElements = collectElements(target);
 
-  if (typeof target === 'string') {
-    target = document.querySelectorAll(target);
+  // Short-circuit if no target is picked
+  if (!targetElements || targetElements.length < 1) return false;
+
+  // Remove class from the group
+  if (this.config.group) {
+    this.removeClass(this.config.group, this.config.className);
   }
-  if (isIterable(target)) {
-    this.config.lastTarget = Array.from(target);
-  } else {
-    this.config.lastTarget = [target];
-  }
 
-  this.removeClass(this.config.group, this.config.className);
+  // Add class to the target(s)
+  this.addClass(targetElements, this.config.className);
 
-  this.addClass(this.config.lastTarget, this.config.className);
+  this.config.lastTarget = targetElements;
 
+  // Add target to the group, if not included
   this.addToGroup(this.config.lastTarget);
+}
+
+/**
+ * Remove the class from a subset or all items
+ */
+const clear = function(target = false) {
+  if (target) {
+    target = collectElements(target);
+    this.removeClass(target, this.config.className);
+  } else {
+    this.removeClass(this.config.group, this.config.className);
+  }
 }
 
 /**
@@ -133,6 +164,7 @@ const pickOne = () => ({
   removeClass,
   setGroup,
   addToGroup,
+  clear,
 });
 
 export default pickOne;
