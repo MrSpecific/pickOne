@@ -35,6 +35,11 @@ Again, you can use a DOM Element, a NodeList or a string with a selector to spec
 
 **pickOne** is agnostic of usage, so you'll need to set up your own event listeners / functionality to trigger changes.
 
+### Additional Config Options
+You can optionally pass these config options on init (or later):
+- `invert: [boolean]` - When set to `true`, **pickOne** will do the __inverse__ of normal behavior. Eg., it will remove the selected class from the __picked__ element, and *add* it to the rest of the group.
+- `offClassName: [string]` - This is an additional class, which will be applied whenever the primary class has been removed from an element.
+
 ### Additional Methods
 - `pickOne.setGroup()` - Set a new group for the **pickOne** instance. Useful if something else has manipulated the DOM.
 - `pickOne.addClass()` - Add the class to one or more elements (without removing it from any others)
