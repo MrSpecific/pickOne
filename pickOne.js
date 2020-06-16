@@ -63,7 +63,7 @@ const collectElements = function(elements) {
 /**
  * Add a class to an element or set of elements
  */
-const addClass = function(elements, className, offClassName) {
+const addClass = function(elements, className, offClassName = false) {
   const elementArray = collectElements(elements);
 
   elementArray.forEach((element) => {
