@@ -1,6 +1,7 @@
 /**
  * Function factory to allow an easy method to set a class on
  * only the desired elements of a set
+ * @version 1.0.0
  * @type {Object}
  */
 
