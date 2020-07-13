@@ -1,7 +1,7 @@
 /**
  * Function factory to allow an easy method to set a class on
  * only the desired elements of a set
- * @version 1.0.0
+ * @version 1.1.0
  * @type {Object}
  */
 
@@ -13,6 +13,7 @@ let config = {
   group: false,
   className: false,
   offClassName: false,
+  invert: false,
 }
 
 /**
@@ -62,11 +63,16 @@ const collectElements = function(elements) {
 /**
  * Add a class to an element or set of elements
  */
-const addClass = function(elements, className) {
+const addClass = function(elements, className, offClassName = false) {
   const elementArray = collectElements(elements);
 
   elementArray.forEach((element) => {
     element.classList.add(className);
+
+    if (offClassName) {
+      element.classList.remove(offClassName);
+    }
+
     fireEvent('classAdded', element);
   });
 }
@@ -94,7 +100,7 @@ const setGroup = function(group) {
 /**
  * Remove the desired class from all elements of the group
  */
-const removeClass = (elements, className) => {
+const removeClass = (elements, className, offClassName = false) => {
   if (!elements || !className) return false;
 
   const elementArray = collectElements(elements);
@@ -102,6 +108,11 @@ const removeClass = (elements, className) => {
   elementArray.forEach((element) => {
     if (element.classList.contains(className)) {
       element.classList.remove(className);
+
+      if (offClassName) {
+        element.classList.add(offClassName);
+      }
+
       fireEvent('classRemoved', element);
     }
   });
@@ -118,11 +129,19 @@ const pick = function(target) {
 
   // Remove class from the group
   if (this.config.group) {
-    this.removeClass(this.config.group, this.config.className);
+    if (this.config.invert) {
+      this.addClass(this.config.group, this.config.className, this.config.offClassName);
+    } else {
+      this.removeClass(this.config.group, this.config.className, this.config.offClassName);
+    }
   }
 
   // Add class to the target(s)
-  this.addClass(targetElements, this.config.className);
+  if (this.config.invert) {
+    this.removeClass(targetElements, this.config.className, this.config.offClassName);
+  } else {
+    this.addClass(targetElements, this.config.className, this.config.offClassName);
+  }
 
   this.config.lastTarget = targetElements;
 
