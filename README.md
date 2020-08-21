@@ -9,7 +9,7 @@ A tiny ES6+ utility to easily apply a class on one item (or more) of a set, and 
 ## :wrench: Setup & Usage
 Simply drop-in and import the module into your code
 ```
-import pickOne from './pickOne';
+import pickOne from './pickoneitem';
 ```
 
 Then, create your **pickOne** set and initialize it with an options object
