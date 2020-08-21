@@ -1,5 +1,5 @@
 {
-  "name": "@mrspecific/pickone",
+  "name": "pickone",
   "version": "1.0.0",
   "description": "A tiny ES6+ utility to easily apply a class on only one item of a set (at a time).",
   "main": "pickOne.js",
