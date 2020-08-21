@@ -20,6 +20,6 @@
   },
   "homepage": "https://github.com/mrspecific/pickOne#readme",
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/@mrspecific"
+    "registry": "https://npm.pkg.github.com/"
   }
 }
