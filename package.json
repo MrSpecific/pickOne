@@ -1,0 +1,22 @@
+{
+  "name": "pickone",
+  "version": "1.0.0",
+  "description": "A tiny ES6+ utility to easily apply a class on only one item of a set (at a time).",
+  "main": "pickOne.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wlcr/pickOne.git"
+  },
+  "keywords": [
+    "ES6"
+  ],
+  "author": "Will Christenson",
+  "license": "GPLv3",
+  "bugs": {
+    "url": "https://github.com/mrspecific/pickOne/issues"
+  },
+  "homepage": "https://github.com/mrspecific/pickOne#readme"
+}
