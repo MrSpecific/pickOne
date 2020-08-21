@@ -1,6 +1,8 @@
 # pickOne
 A tiny ES6+ utility to easily apply a class on one item (or more) of a set, and remove it from the others.
 
+> NOTE: Named pickOneItem on NPM to avoid existing package names
+
 ## :floppy_disk: Development Team
 - [Will Christenson](https://github.com/MrSpecific) (Egalitarian Project Lead :unicorn:)
 
