@@ -1,6 +1,6 @@
 {
   "name": "pickoneitem",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A tiny ES6+ utility to easily apply a class on only one item of a set (at a time).",
   "main": "pickOne.js",
   "scripts": {
